@@ -8,15 +8,22 @@ import { getAll, get5First, getRedGoods } from './api/goods';
 
 export const App: React.FC = () => {
   const [goods, setGoods] = useState<Good[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchGoods = (type: string) => {
     switch (type) {
       case 'All':
-        return getAll().then(data => setGoods(data));
+        return getAll()
+          .then(data => setGoods(data))
+          .catch(() => setError('Try again later'));
       case 'Five':
-        return get5First().then(data => setGoods(data));
+        return get5First()
+          .then(data => setGoods(data))
+          .catch(() => setError('Try again later'));
       case 'Red':
-        return getRedGoods().then(data => setGoods(data));
+        return getRedGoods()
+          .then(data => setGoods(data))
+          .catch(() => setError('Try again later'));
     }
   };
 
@@ -49,6 +56,8 @@ export const App: React.FC = () => {
       </button>
 
       <GoodsList goods={goods} />
+
+      {error && <p>{error}</p>}
     </div>
   );
 };
