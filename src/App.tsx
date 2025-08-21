@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.scss';
-import { GoodsList } from './GoodsList';
+import GoodsList from './GoodsList';
 import { Good } from './types/Good';
 import { getAll, get5First, getRedGoods } from './api/goods';
 // or
@@ -19,11 +19,13 @@ export const App: React.FC = () => {
       case 'Five':
         return get5First()
           .then(data => setGoods(data))
-          .catch(() => setError('Try again later'));
+          .catch(() => setError('Failed to load first 5 goods'));
       case 'Red':
         return getRedGoods()
           .then(data => setGoods(data))
-          .catch(() => setError('Try again later'));
+          .catch(() => setError('Failed to load red goods'));
+      default:
+        return [];
     }
   };
 

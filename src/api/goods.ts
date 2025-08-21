@@ -18,21 +18,30 @@ export async function getAll(): Promise<Good[]> {
     throw e instanceof Error ? e : new Error(String(e));
   }
 }
-
+//new Error()
 // sort and get the first 5
-export const get5First = async () => {
-  return getAll().then(goods => {
-    return goods
-      .toSorted((a, b) =>
-        a.name.toLowerCase().localeCompare(b.name.toLowerCase()),
-      )
-      .slice(0, 5);
-  });
+
+export const get5First = async (): Promise<Good[]> => {
+  try {
+    return await getAll().then(goods => {
+      return goods
+        .toSorted((a, b) =>
+          a.name.toLowerCase().localeCompare(b.name.toLowerCase()),
+        )
+        .slice(0, 5);
+    });
+  } catch (e) {
+    throw e instanceof Error ? e : new Error(String(e));
+  }
 };
 
 // get only red
-export const getRedGoods = async () => {
-  return getAll()
-    .then(goods => goods)
-    .then(data => data.filter(x => x.color === 'red'));
+export const getRedGoods = async (): Promise<Good[]> => {
+  try {
+    return await getAll()
+      .then(goods => goods)
+      .then(data => data.filter(x => x.color === 'red'));
+  } catch (e) {
+    throw e instanceof Error ? e : new Error(String(e));
+  }
 };
